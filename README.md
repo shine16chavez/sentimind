@@ -60,7 +60,3 @@ Python · Flask · scikit-learn · VADER · TextBlob · Chart.js · HTML/CSS
 ## Dataset
 
 [Sentiment Analysis for Mental Health](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) by Suchintika Sarkar on Kaggle (53,043 samples). The dataset is not included in this repository.
-
-## Author
-
-**Sabrina Chavez**, Project Lead / Lead Developer · B.S. Computer Science (Data Science and Analytics), Mapúa Malayan Colleges Laguna
