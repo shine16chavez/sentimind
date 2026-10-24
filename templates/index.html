@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentiMind| Sentiment AI Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SentiMind</div>
+            <div class="nav-links">
+                <button class="nav-item active" onclick="showPage('why', this)">Why?</button>
+                <button class="nav-item" onclick="showPage('about', this)">About this website</button>
+                <button class="nav-item" onclick="showPage('input', this)">Tell us how you feel</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="why" class="page active">
+            <div class="header">
+                <h1>Why SentiMind?</h1>
+                <p>A Web-Based Mental Health Prediction and Sentiment Analysis System.</p>
+            </div>
+
+            <div class="vertical-stack">
+                <div class="row-card glass">
+                    <div class="row-content">
+                        <span class="tag">The Problem</span>
+                        <h2>The Silent Crisis</h2>
+                        <p>Mental health struggles often go unspoken in physical spaces but leave deep traces in digital conversations. Traditional monitoring relies on manual reporting, often missing subtle linguistic cues of 
+                            <span class="text-highlight">Anxiety</span>, 
+                            <span class="text-highlight">Bipolar</span>, or 
+                            <span class="text-highlight">Depression</span> until it's too late.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row-card glass">
+                    <div class="row-content">
+                        <span class="tag">Early Intervention</span>
+                        <h2>The Critical Window</h2>
+                        <p>Identifying <span class="text-highlight">Depression</span>, <span class="text-highlight">Bipolar</span>, <span class="text-highlight">Anxiety</span> and <span class="text-highlight">Suicidal Ideation</span> at the earliest stages is the difference between a recovery plan and a medical emergency. SentiMind analyzes text to find the "tipping point" where a <span class="text-highlight">Normal</span> state begins to shift into clinical distress.</p>
+                    </div>
+                </div>
+
+                <div class="row-card glass">
+                    <div class="row-content">
+                        <span class="tag">The Innovation</span>
+                        <h2>Ensemble Intelligence & Bagging</h2>
+                        <p>SentiMind utilizes a dual-engine architecture. We employ <span class="text-highlight">Bagging (Random Forest)</span> to categorize text into six specific mental health states with high stability. Simultaneously, our sentiment analysis runs through a <span class="text-highlight">Manual Ensemble of VADER and TextBlob</span>, combining lexicon-based intensity with polarity and subjectivity metrics to ensure robust triage.</p>
+                    </div>
+                </div>
+
+                <div class="row-card glass highlight">
+                    <div class="row-content">
+                        <span class="tag">Our Mission</span>
+                        <h2>SentiMind's Goal</h2>
+                        <p>Our mission is to empower communities with a proactive tool that predicts <span class="text-highlight">Anxiety, Depression, Bipolar, or Suicidal ideation</span> through advanced NLP. By mapping complex clinical signatures to a clear <span class="text-highlight">Negative/Neutral</span> scale, we provide a triage system that respects privacy while flagging those who need support most.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="page">
+            <div class="header">
+                <h1>Methods & Visualizations</h1>
+                <p>The methods used to make SentiMind.</p>
+            </div>
+
+            <div class="bento-grid" style="margin-top: 24px;">
+                <div class="card glass span-2">
+                    <div class="card-header">
+                        <i data-lucide="database" class="icon-teal"></i>
+                        <h3>About the Dataset</h3>
+                    </div>
+                    
+                    <div class="dataset-hero-content">
+                        <h2 class="hero-metric">53,043</h2>
+                        <p class="hero-subtext">Total Processed Samples</p>
+                        
+                        <div class="hero-divider"></div>
+                        
+                        <p class="hero-description">
+                            We utilized the <b>Sentiment Analysis for Mental Health</b> dataset by Suchintika Sarkar, hosted on Kaggle. 
+                            This collection bridges the gap between raw conversational text and clinical mental health labels.
+                        </p>
+
+                        <div class="source-link-box">
+                            <i data-lucide="external-link" size="18"></i>
+                            <a href="https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health/data" target="_blank">View Source on Kaggle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card glass">
+                    <div class="card-header">
+                        <i data-lucide="pie-chart" class="icon-teal"></i>
+                        <h3>Label Distribution</h3>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="labelChart"></canvas>
+                    </div>
+
+                    <div class="mini-legend">
+                        <div class="leg-item"><span class="dot normal"></span> Normal</div>
+                        <div class="leg-item"><span class="dot depression"></span> Depression</div>
+                        <div class="leg-item"><span class="dot suicidal"></span> Suicidal</div>
+                        <div class="leg-item"><span class="dot bipolar"></span> Bipolar</div>
+                        <div class="leg-item"><span class="dot stress"></span> Stress</div>
+                        <div class="leg-item"><span class="dot anxiety"></span> Anxiety</div>
+                        <div class="leg-item"><span class="dot personality"></span> Personality Disorder</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-layout-grid" style="margin-top: 24px;">
+                <div class="card glass technical-process-card">
+                    <div class="card-header">
+                        <i data-lucide="cpu" class="icon-teal"></i>
+                        <h2>Our Technical Process</h2>
+                    </div>
+                    <div class="process-stepper">
+                        <div class="step">
+                            <div class="step-number">01</div>
+                            <div class="step-info">
+                                <strong>Initial Cleaning</strong>
+                                <p>Rigorous data sanitation: dropped nulls, stripped redundant columns, and applied regex `[^a-zA-Z\s]` for linguistic normalization.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">02</div>
+                            <div class="step-info">
+                                <strong>IG and Entropy Analysis</strong>
+                                <p>Measured Shannon Entropy ($H$) to quantify dataset impurity and calculated Information Gain for every token.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">03</div>
+                            <div class="step-info">
+                                <strong>Feature Denoising</strong>
+                                <p>Filtered vocabulary using a $0.001$ IG threshold to remove statistical noise and focus on clinical markers.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">04</div>
+                            <div class="step-info">
+                                <strong>Random Forest Bagging</strong>
+                                <p>Deployed a Bagging ensemble of 100 Decision Trees to classify status across 6 mental health categories.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">05</div>
+                            <div class="step-info">
+                                <strong>Manual Sentiment Ensemble</strong>
+                                <p>Combined VADER intensity with TextBlob polarity for broad Negative/Neutral triage.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">06</div>
+                            <div class="step-info">
+                                <strong>Flask Integration</strong>
+                                <p>Real-time inference via serialized Pickle models and asynchronous API requests.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-column">
+                    <div class="card glass">
+                        <h3>Random Forest Classifier</h3>
+                        <div class="stat-row">
+                            <span>Accuracy</span>
+                            <span class="stat-val">75%</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Confidence Level</span>
+                            <span class="stat-val">90%</span>
+                        </div>
+                        <i data-lucide="zap" class="bg-icon"></i>
+                    </div>
+
+                    <div class="card glass">
+                        <h3>VADER Performance</h3>
+                        <div class="stat-row">
+                            <span>Accuracy</span>
+                            <span class="stat-val">56.67%</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Confidence Level</span>
+                            <span class="stat-val">57.30%</span>
+                        </div>
+                        <i data-lucide="zap" class="bg-icon"></i>
+                    </div>
+
+                    <div class="card glass">
+                        <h3>TextBlob Performance</h3>
+                        <div class="stat-row">
+                            <span>Accuracy</span>
+                            <span class="stat-val">29.54%</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Confidence Level</span>
+                            <span class="stat-val">17.04%</span>
+                        </div>
+                        <i data-lucide="layers" class="bg-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-layout-grid" style="margin-top: 24px;">
+    
+            <div class="card glass">
+                <div class="card-header">
+                    <i data-lucide="grid" class="icon-teal"></i>
+                    <div>
+                        <h3>Primary Classifier</h3>
+                        <p class="table-label" style="margin: 0; color: var(--teal);">Random Forest Results</p>
+                    </div>
+                </div>
+                <div class="matrix-wrapper">
+                    <table class="cm-table">
+                        <thead>
+                            <tr>
+                                <th>Act\Pred</th>
+                                <th>Anx</th>
+                                <th>Bip</th>
+                                <th>Dep</th>
+                                <th>Nor</th>
+                                <th>Per</th>
+                                <th>Str</th>
+                                <th>Sui</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Anxiety</td><td class="match">606</td><td>13</td><td>53</td><td>79</td><td>1</td><td>9</td><td>7</td></tr>
+                            <tr><td>Bipolar</td><td>17</td><td class="match">409</td><td>49</td><td>56</td><td>1</td><td>17</td><td>7</td></tr>
+                            <tr><td>Depression</td><td>39</td><td>20</td><td class="match">2219</td><td>279</td><td>2</td><td>14</td><td>508</td></tr>
+                            <tr><td>Normal</td><td>35</td><td>0</td><td>52</td><td class="match">3109</td><td>4</td><td>15</td><td>54</td></tr>
+                            <tr><td>Personality</td><td>8</td><td>6</td><td>35</td><td>37</td><td class="match">126</td><td>2</td><td>2</td></tr>
+                            <tr><td>Stress</td><td>68</td><td>6</td><td>88</td><td>140</td><td>1</td><td class="match">193</td><td>21</td></tr>
+                            <tr><td>Suicidal</td><td>8</td><td>4</td><td>596</td><td>292</td><td>0</td><td>0</td><td class="match">1231</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="matrix-footer">
+                    <span>Rows: Actual</span>
+                    <span>Columns: Predicted</span>
+                </div>
+            </div>
+
+            <div class="card glass">
+                <div class="card-header">
+                    <i data-lucide="zap" class="icon-teal"></i>
+                    <div>
+                        <h3>Sentiment Analysis</h3>
+                        <p class="table-label" style="margin: 0; color: var(--teal);">Manual Ensemble Logic</p>
+                    </div>
+                </div>
+                
+                <div class="matrix-stack">
+                    <div class="matrix-wrapper">
+                        <p class="table-label">VADER (Neg / Neu / Pos)</p>
+                        <table class="cm-table mini">
+                            <tr><td class="match">4,179</td><td>215</td><td>2,109</td></tr>
+                            <tr><td>605</td><td class="match">1,219</td><td>1,093</td></tr>
+                            <tr><td>0</td><td>0</td><td class="match">0</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="hero-divider" style="margin: 25px auto;"></div>
+
+                    <div class="matrix-wrapper">
+                        <p class="table-label">TextBlob (Pos / Neu / Neg)</p>
+                        <table class="cm-table mini">
+                            <tr><td class="match">731</td><td>1,693</td><td>475</td></tr>
+                            <tr><td>0</td><td class="match">0</td><td>0</td></tr>
+                            <tr><td>1,749</td><td>3,238</td><td class="match">2,269</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="input" class="page">
+            <div class="input-hero">
+                <h1>Tell us how you have been feeling lately</h1>
+                <p>Type a statement to test the model's prediction capabilities.</p>
+                <div class="input-card glass">
+                    <textarea id="user-input" placeholder="How are you feeling today?"></textarea>
+                    <br>
+                    <button class="action-btn" id="run-btn" onclick="runAnalysis()">Run</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="results" class="page">
+            <div class="results-wrapper">
+                <div class="card glass result-box">
+                    <p class="res-tag">DIAGNOSTIC SUMMARY</p>
+                    
+                    <div class="result-segment">
+                        <p class="hero-subtext" style="font-size: 0.7rem; color: var(--teal);">Mental Health State</p>
+                        <h1 id="res-status" style="font-size: 3rem; margin: 5px 0;">...</h1>
+                        <div class="confidence-wrap">
+                            <p>Prediction Confidence: <span id="res-conf-pred">0</span>%</p>
+                            <div class="progress-bar"><div id="res-bar-pred" class="progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="hero-divider" style="margin: 20px auto; width: 40%; opacity: 0.3;"></div>
+
+                    <div class="result-segment">
+                        <p class="hero-subtext" style="font-size: 0.7rem; color: var(--teal);">Emotional Tone</p>
+                        <h2 id="res-sentiment" style="font-size: 2rem; margin: 5px 0; font-weight: 800;">...</h2>
+                        <div class="confidence-wrap">
+                            <p>Sentiment Confidence: <span id="res-conf-sent">0</span>%</p>
+                            <div class="progress-bar"><div id="res-bar-sent" class="progress-fill" style="background: var(--bright-teal);"></div></div>
+                        </div>
+                    </div>
+                    
+                    <p id="res-desc" style="margin-top: 25px; color: var(--dim); line-height: 1.6; font-size: 0.95rem;">Analysis complete.</p>
+                    
+                    <button class="action-btn" style="margin-top: 25px;" onclick="showPage('input', null)">
+                        <i data-lucide="refresh-cw" size="16" style="vertical-align: middle; margin-right: 8px;"></i>Try another input
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function showPage(id, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            if (btn) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                btn.classList.add('active');
+            } else {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            }
+        }
+
+        async function runAnalysis() {
+            const val = document.getElementById('user-input').value.trim();
+            if (!val) return alert("Please enter some text.");
+
+            const btn = document.getElementById('run-btn');
+            btn.textContent = "Analyzing…";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/infer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: val }),
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.error || 'Server error');
+                }
+
+                const data = await response.json();
+                renderResults(data);
+
+            } catch (err) {
+                alert("Analysis failed: " + err.message);
+            } finally {
+                btn.textContent = "Run Inference";
+                btn.disabled = false;
+            }
+        }
+
+        function renderResults(data) {
+            //Get Prediction Data (Random Forest)
+            const predLabel = data.prediction?.raw_label || "UNKNOWN";
+            const predConf = data.prediction?.confidence || 0;
+            const description = data.prediction?.description || data.description || "";
+
+            //Get Sentiment Data (Ensemble)
+            const sentLabel = data.sentiment?.label || "NEUTRAL";
+            const sentConf = data.sentiment?.confidence || 0;
+
+            //Update Text Content
+            document.getElementById('res-status').textContent = predLabel.toUpperCase();
+            document.getElementById('res-conf-pred').textContent = predConf;
+            
+            document.getElementById('res-sentiment').textContent = sentLabel.toUpperCase();
+            document.getElementById('res-conf-sent').textContent = sentConf;
+            
+            document.getElementById('res-desc').textContent = description;
+
+            const statusEl = document.getElementById('res-status');
+            const highRisk = ["SUICIDAL", "DEPRESSION", "BIPOLAR, ANXIETY, PERSONALITY DISORDER"];
+            statusEl.style.color = highRisk.includes(predLabel.toUpperCase()) ? "#fb7185" : "#14b8a6";
+
+            //Progress Bars
+            const barPred = document.getElementById('res-bar-pred');
+            const barSent = document.getElementById('res-bar-sent');
+            
+            barPred.style.width = "0%";
+            barSent.style.width = "0%";
+            
+            setTimeout(() => { 
+                barPred.style.width = predConf + "%"; 
+                barSent.style.width = sentConf + "%"; 
+            }, 100);
+
+            showPage('results', null);
+        }
+
+        //Label Distribution Chart
+        const ctx = document.getElementById('labelChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Normal', 'Depression', 'Suicidal', 'Anxiety', 'Bipolar', 'Stress', 'Personality Disorder'],
+                datasets: [{
+                    data: [14495, 15381, 10630, 3828, 2776, 2583, 1078], 
+                    backgroundColor: [
+                        '#14b8a6', // Normal 
+                        '#0d9488', // Depression 
+                        '#0f766e', // Suicidal 
+                        '#5eead4', // Anxiety 
+                        '#2dd4bf', // Bipolar 
+                        '#99f6e4', // Stress
+                        '#042f2e'  // Personality Disorder
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 20
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                cutout: '70%'
+            }
+        });
+    </script>
+</body>
+</html>
